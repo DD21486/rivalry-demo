@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rivalry — Web Demo
 
-## Getting Started
+A mobile-first web prototype for **Rivalry**, a competitive social network for sports fans.
 
-First, run the development server:
+**Tagline:** *Where fans prove who knows more.*
+
+This is a **demo only** — no auth, database, or backend. All data is static fake content focused on SEC NCAA Basketball.
+
+## Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Demo walkthrough (~3 min)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Home** (`/`) — Scroll a busy SEC basketball feed with 25 posts and active debates
+2. **Hero thread** (`/post/ky-guards-take`) — Read nested replies, tap **Challenge** on Mike's reply
+3. **Challenge** (`/challenge/ch_derek_mike`) — Accept → land on the live debate
+4. **Live debate** (`/debate/ky-vs-bama-guards`) — Stage arguments (Opening/Rebuttal/Closing tabs) + Bleachers trash talk
+5. **Voting debate** (`/debate/tn-vs-fl-depth`) — Cast a vote (stored in sessionStorage for demo)
+6. **Result card** (`/debate/bama-vs-tn-rivalry/result`) — Shareable verdict with W/L update
+7. **Profile** (`/u/derek_ky`) — Records, badges, debate history
+8. **Leaderboard** (`/leaderboard`) — SEC rankings filterable by community
 
-## Learn More
+## Routes
 
-To learn more about Next.js, take a look at the following resources:
+| Route | Description |
+|-------|-------------|
+| `/` | Home feed |
+| `/explore` | Community browser (NCAABB → SEC → teams) |
+| `/c/[slug]` | Community hub |
+| `/post/[id]` | Thread with nested replies |
+| `/challenge/[id]` | Challenge flow |
+| `/debates` | Debates hub (Live, Voting, Upcoming, Completed) |
+| `/debate/[id]` | Debate viewer (Stage + Bleachers) |
+| `/debate/[id]/result` | Shareable result card |
+| `/u/[username]` | User profile |
+| `/leaderboard` | Rankings |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Demo data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 20 users with records, bios, and badges
+- 25 posts, 80+ nested replies
+- 8 debates (live, voting, upcoming, completed)
+- 6 challenges (sent, negotiating, accepted, declined, expired)
+- 60+ bleacher comments
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deploy to [Vercel](https://vercel.com) for a shareable URL.
+
+## Stack
+
+- Next.js 16 (App Router) + TypeScript
+- Tailwind CSS v4 (dark mode only)
+- lucide-react icons
+- Static mock data in `lib/mock/`
