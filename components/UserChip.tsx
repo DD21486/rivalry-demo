@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getCommunityById, getUserById } from "@/lib/mock";
 import { formatRecord } from "@/lib/utils";
 import { getTeamColor } from "@/lib/utils";
+import { CommunityBasketballIcon } from "./CommunityBasketballIcon";
+import { UserAvatar } from "./UserAvatar";
 
 interface UserChipProps {
   userId: string;
@@ -21,11 +23,12 @@ export function UserChip({ userId, showRecord = true, size = "sm" }: UserChipPro
       href={`/u/${user.username}`}
       className="inline-flex items-center gap-2 min-h-[44px] group"
     >
-      <img
+      <UserAvatar
+        userId={user.id}
+        displayName={user.displayName}
         src={user.avatar}
-        alt={user.displayName}
-        className={`rounded-full ${size === "sm" ? "w-8 h-8" : "w-10 h-10"}`}
-        style={{ boxShadow: `0 0 0 2px ${teamColor}` }}
+        size={size === "sm" ? "sm" : "md"}
+        ringColor={teamColor}
       />
       <div className="flex flex-col">
         <span className={`font-medium text-text-primary group-hover:text-accent ${size === "sm" ? "text-sm" : "text-base"}`}>
@@ -33,7 +36,17 @@ export function UserChip({ userId, showRecord = true, size = "sm" }: UserChipPro
         </span>
         <span className="text-xs text-text-secondary flex items-center gap-1.5">
           {community && (
-            <span style={{ color: teamColor }}>{community.name}</span>
+            <span
+              className="inline-flex items-center gap-1"
+              style={{ color: teamColor }}
+            >
+              <CommunityBasketballIcon
+                slug={community.slug}
+                color={teamColor}
+                size="sm"
+              />
+              {community.name}
+            </span>
           )}
           {showRecord && (
             <span className="tabular-nums text-text-muted">

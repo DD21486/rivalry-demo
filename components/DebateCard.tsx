@@ -3,6 +3,8 @@ import { Eye } from "lucide-react";
 import { getUserById, getCommunityById } from "@/lib/mock";
 import { getTeamColor } from "@/lib/utils";
 import { DebateStatusBadge } from "./DebateStatusBadge";
+import { DebateTags } from "./DebateTags";
+import { UserAvatar } from "./UserAvatar";
 import type { Debate } from "@/lib/types";
 
 interface DebateCardProps {
@@ -21,13 +23,19 @@ export function DebateCard({ debate }: DebateCardProps) {
   return (
     <Link
       href={`/debate/${debate.id}`}
-      className={`block p-4 bg-bg-surface border rounded-xl transition-colors hover:bg-bg-muted ${
-        isLive ? "border-status-live/40 glow-live" : "border-border"
+      style={{
+        background: `linear-gradient(145deg, color-mix(in srgb, ${color1} 16%, var(--bg-surface)) 0%, var(--bg-surface) 48%, color-mix(in srgb, ${color2} 14%, var(--bg-elevated)) 100%)`,
+      }}
+      className={`block p-4 rounded-2xl surface-card transition-all hover:brightness-[1.03] hover:border-white/10 ${
+        isLive ? "border-status-live/35 glow-live" : ""
       }`}
     >
-      <div className="flex items-center justify-between mb-3">
-        <DebateStatusBadge status={debate.status} />
-        <span className="flex items-center gap-1 text-xs text-text-muted">
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <div className="flex items-center gap-2 flex-wrap min-w-0">
+          <DebateStatusBadge status={debate.status} />
+          <DebateTags communityIds={debate.communityIds} link={false} />
+        </div>
+        <span className="flex shrink-0 items-center gap-1 text-xs text-text-muted">
           <Eye className="w-3.5 h-3.5" />
           {debate.spectatorCount.toLocaleString()}
         </span>
@@ -40,11 +48,12 @@ export function DebateCard({ debate }: DebateCardProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <img
+            <UserAvatar
+              userId={p1.id}
+              displayName={p1.displayName}
               src={p1.avatar}
-              alt={p1.displayName}
-              className="w-8 h-8 rounded-full"
-              style={{ boxShadow: `0 0 0 2px ${color1}` }}
+              size="sm"
+              ringColor={color1}
             />
             <span className="text-sm font-medium text-text-primary">
               {p1.displayName}
@@ -52,11 +61,12 @@ export function DebateCard({ debate }: DebateCardProps) {
           </div>
           <span className="text-text-muted text-sm">vs</span>
           <div className="flex items-center gap-2">
-            <img
+            <UserAvatar
+              userId={p2.id}
+              displayName={p2.displayName}
               src={p2.avatar}
-              alt={p2.displayName}
-              className="w-8 h-8 rounded-full"
-              style={{ boxShadow: `0 0 0 2px ${color2}` }}
+              size="sm"
+              ringColor={color2}
             />
             <span className="text-sm font-medium text-text-primary">
               {p2.displayName}

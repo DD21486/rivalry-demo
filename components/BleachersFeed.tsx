@@ -1,6 +1,7 @@
 import { getUserById } from "@/lib/mock";
 import { formatRelativeTime } from "@/lib/utils";
 import type { BleacherComment } from "@/lib/types";
+import { UserAvatar } from "./UserAvatar";
 
 interface BleachersFeedProps {
   comments: BleacherComment[];
@@ -35,10 +36,11 @@ export function BleachersFeed({ comments }: BleachersFeedProps) {
             <div key={comment.id} className="px-4 py-3">
               <div className="flex items-center gap-2 mb-1">
                 {author && (
-                  <img
+                  <UserAvatar
+                    userId={author.id}
+                    displayName={author.displayName}
                     src={author.avatar}
-                    alt={author.displayName}
-                    className="w-6 h-6 rounded-full"
+                    size="xs"
                   />
                 )}
                 <span className="text-sm font-medium text-text-primary">

@@ -9,7 +9,11 @@ import {
   getDebatesForCommunity,
   getLeaderboardForCommunity,
 } from "@/lib/mock";
-import { getTeamColor, getCommunityBreadcrumb } from "@/lib/utils";
+import { getCommunityBreadcrumb } from "@/lib/utils";
+import {
+  CommunityBasketballIcon,
+  getCommunityColor,
+} from "@/components/CommunityBasketballIcon";
 import { communities } from "@/lib/mock";
 
 interface Props {
@@ -27,7 +31,7 @@ export default async function CommunityPage({ params }: Props) {
   );
   const leaderboard = getLeaderboardForCommunity(community.id).slice(0, 5);
   const breadcrumb = getCommunityBreadcrumb(community, communities);
-  const color = getTeamColor(community.slug);
+  const color = getCommunityColor(community);
 
   return (
     <div>
@@ -43,12 +47,12 @@ export default async function CommunityPage({ params }: Props) {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          {community.type === "team" && (
-            <div
-              className="w-1.5 h-10 rounded-full"
-              style={{ backgroundColor: color }}
-            />
-          )}
+          <CommunityBasketballIcon
+            slug={community.slug}
+            color={color}
+            size="lg"
+            title={community.name}
+          />
           <div>
             <h1 className="text-2xl font-bold text-text-primary">
               {community.name}

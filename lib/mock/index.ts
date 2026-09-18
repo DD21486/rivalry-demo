@@ -5,16 +5,23 @@ import { leaderboardEntries } from "./leaderboard";
 import { posts } from "./posts";
 import { replies } from "./replies";
 import { users } from "./users";
+import { resolveUserAvatar } from "../avatars";
 import type { Community, Debate, Post, Reply, User } from "../types";
+
+function withPhotoAvatar(user: User): User {
+  return { ...user, avatar: resolveUserAvatar(user.id) };
+}
 
 export { users, communities, posts, replies, challenges, debates, leaderboardEntries };
 
 export function getUserById(id: string): User | undefined {
-  return users.find((u) => u.id === id);
+  const user = users.find((u) => u.id === id);
+  return user ? withPhotoAvatar(user) : undefined;
 }
 
 export function getUserByUsername(username: string): User | undefined {
-  return users.find((u) => u.username === username);
+  const user = users.find((u) => u.username === username);
+  return user ? withPhotoAvatar(user) : undefined;
 }
 
 export function getCommunityBySlug(slug: string): Community | undefined {

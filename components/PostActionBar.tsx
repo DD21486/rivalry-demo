@@ -2,18 +2,26 @@
 
 import Link from "next/link";
 import { MessageSquare, Share2 } from "lucide-react";
+import { InviteToDebateButton } from "./InviteToDebateButton";
 
 interface PostActionBarProps {
   postId: string;
   replyCount: number;
   shareText?: string;
+  showInvite?: boolean;
+  inviteTopic?: string;
+  inviteOpponentId?: string;
 }
 
 export function PostActionBar({
   postId,
   replyCount,
   shareText,
+  showInvite = false,
+  inviteTopic = "",
+  inviteOpponentId,
 }: PostActionBarProps) {
+
   const handleShare = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -30,7 +38,7 @@ export function PostActionBar({
   };
 
   return (
-    <div className="flex items-center gap-1 -ml-2">
+    <div className="flex flex-wrap items-center gap-1 -ml-2">
       <Link
         href={`/post/${postId}`}
         className="inline-flex items-center gap-2 px-3 py-2.5 min-h-[44px] rounded-lg text-sm font-semibold text-text-secondary hover:bg-bg-muted hover:text-text-primary transition-colors"
@@ -46,6 +54,13 @@ export function PostActionBar({
         <Share2 className="w-[18px] h-[18px]" />
         Share
       </button>
+      {showInvite && (
+        <InviteToDebateButton
+          postId={postId}
+          defaultTopic={inviteTopic || shareText || ""}
+          defaultOpponentId={inviteOpponentId}
+        />
+      )}
     </div>
   );
 }

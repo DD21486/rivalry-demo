@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getCommunityById, getUserById } from "@/lib/mock";
 import { formatRecord, getTeamColor } from "@/lib/utils";
 import type { LeaderboardEntry } from "@/lib/types";
+import { UserAvatar } from "./UserAvatar";
 
 interface LeaderboardTableProps {
   entries: LeaderboardEntry[];
@@ -37,10 +38,12 @@ export function LeaderboardTable({ entries }: LeaderboardTableProps) {
                 {entry.rank}
               </span>
               <div className="flex items-center gap-2 min-w-0">
-                <img
+                <UserAvatar
+                  userId={user.id}
+                  displayName={user.displayName}
                   src={user.avatar}
-                  alt={user.displayName}
-                  className="w-8 h-8 rounded-full shrink-0"
+                  size="sm"
+                  ringColor={color}
                 />
                 <div className="min-w-0">
                   <p className="font-medium text-text-primary truncate">

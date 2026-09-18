@@ -22,6 +22,7 @@ export const debates: Debate[] = [
     communityIds: ["kentucky", "alabama", "sec"],
     sourceChallengeId: "ch_derek_mike",
     spectatorCount: 1247,
+    debateEndsAt: hoursFromNow(2),
     rounds: [
       {
         roundType: "OPENING",

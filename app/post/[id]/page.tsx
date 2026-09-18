@@ -10,6 +10,7 @@ import {
   getUserById,
 } from "@/lib/mock";
 import { formatRelativeTime, getTeamColor } from "@/lib/utils";
+import { CommunityBasketballIcon } from "@/components/CommunityBasketballIcon";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -45,9 +46,14 @@ export default async function PostPage({ params }: Props) {
             <>
               <Link
                 href={`/c/${primaryCommunity.slug}`}
-                className="font-bold hover:underline"
+                className="inline-flex items-center gap-1 font-bold hover:underline"
                 style={{ color: teamColor }}
               >
+                <CommunityBasketballIcon
+                  slug={primaryCommunity.slug}
+                  color={teamColor}
+                  size="sm"
+                />
                 {primaryCommunity.name}
               </Link>
               <span className="text-text-muted">•</span>
@@ -77,6 +83,9 @@ export default async function PostPage({ params }: Props) {
           postId={post.id}
           replyCount={post.replyCount}
           shareText={post.body}
+          showInvite
+          inviteTopic={post.body}
+          inviteOpponentId={post.authorId}
         />
       </article>
 

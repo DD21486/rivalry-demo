@@ -1,5 +1,6 @@
 import { getCommunityById } from "@/lib/mock";
 import { formatRecord, getTeamColor } from "@/lib/utils";
+import { UserAvatar } from "./UserAvatar";
 import type { User } from "@/lib/types";
 
 interface ProfileHeaderProps {
@@ -11,13 +12,14 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
   const teamColor = community ? getTeamColor(community.slug) : "#6366f1";
 
   return (
-    <div className="bg-bg-surface border border-border rounded-xl p-6">
+    <div className="surface-card rounded-2xl p-6">
       <div className="flex items-start gap-4">
-        <img
+        <UserAvatar
+          userId={user.id}
+          displayName={user.displayName}
           src={user.avatar}
-          alt={user.displayName}
-          className="w-20 h-20 rounded-full"
-          style={{ boxShadow: `0 0 0 3px ${teamColor}` }}
+          size="lg"
+          ringColor={teamColor}
         />
         <div className="flex-1 min-w-0">
           <h1 className="text-2xl font-bold text-text-primary">

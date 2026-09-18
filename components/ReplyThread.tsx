@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MessageSquare, Share2 } from "lucide-react";
 import { getUserById, getCommunityById } from "@/lib/mock";
 import { ChallengeButton } from "./ChallengeButton";
+import { InviteToDebateButton } from "./InviteToDebateButton";
 import { formatRelativeTime, buildReplyTree, getTeamColor } from "@/lib/utils";
 import type { Reply } from "@/lib/types";
 
@@ -26,6 +27,8 @@ function ReplyNode({
     ? getCommunityById(author.primaryCommunityId)
     : undefined;
   const teamColor = community ? getTeamColor(community.slug) : "#6366f1";
+
+  const isLeaf = reply.children.length === 0;
 
   const handleShare = () => {
     const url = `${window.location.origin}/post/${postId}#${reply.id}`;
@@ -84,6 +87,14 @@ function ReplyNode({
           </button>
           {reply.challengeId && (
             <ChallengeButton challengeId={reply.challengeId} />
+          )}
+          {isLeaf && (
+            <InviteToDebateButton
+              postId={postId}
+              defaultTopic={reply.body}
+              defaultOpponentId={reply.authorId}
+              size="sm"
+            />
           )}
         </div>
       </div>

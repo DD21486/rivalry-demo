@@ -6,6 +6,7 @@ import { getUserById } from "@/lib/mock";
 import { getCommunityById } from "@/lib/mock";
 import { getTeamColor, getVotePercent, formatRecord } from "@/lib/utils";
 import type { Debate } from "@/lib/types";
+import { UserAvatar } from "./UserAvatar";
 
 interface ResultCardProps {
   debate: Debate;
@@ -45,11 +46,13 @@ export function ResultCard({ debate }: ResultCardProps) {
 
         <div className="flex items-center justify-center gap-4 mb-6">
           <div className="text-center">
-            <img
+            <UserAvatar
+              userId={winner.id}
+              displayName={winner.displayName}
               src={winner.avatar}
-              alt={winner.displayName}
-              className="w-16 h-16 rounded-full mx-auto mb-2"
-              style={{ boxShadow: `0 0 0 3px ${winnerColor}` }}
+              size="card"
+              ringColor={winnerColor}
+              className="mx-auto mb-2"
             />
             <p className="font-bold text-text-primary">{winner.displayName}</p>
             <p className="text-2xl font-bold tabular-nums text-status-completed">
@@ -59,10 +62,12 @@ export function ResultCard({ debate }: ResultCardProps) {
           </div>
           <span className="text-2xl text-text-muted font-light">vs</span>
           <div className="text-center opacity-70">
-            <img
+            <UserAvatar
+              userId={loser.id}
+              displayName={loser.displayName}
               src={loser.avatar}
-              alt={loser.displayName}
-              className="w-16 h-16 rounded-full mx-auto mb-2"
+              size="card"
+              className="mx-auto mb-2"
             />
             <p className="font-medium text-text-secondary">{loser.displayName}</p>
             <p className="text-2xl font-bold tabular-nums text-text-muted">

@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { DEMO_USER_USERNAME } from "@/lib/config";
+import { getUserByUsername } from "@/lib/mock";
+import { UserAvatar } from "./UserAvatar";
 
 interface ProfileAvatarProps {
   active?: boolean;
@@ -8,33 +12,13 @@ interface ProfileAvatarProps {
   linked?: boolean;
 }
 
-const sizes = {
-  sm: "w-8 h-8 text-xs",
-  md: "w-10 h-10 text-sm",
-  lg: "w-12 h-12 text-base",
-};
+const demoUser = getUserByUsername(DEMO_USER_USERNAME);
 
-function AvatarCircle({
-  active,
-  size,
-}: {
-  active: boolean;
-  size: "sm" | "md" | "lg";
-}) {
-  return (
-    <div
-      className={`${sizes[size]} rounded-full flex items-center justify-center font-bold text-white shrink-0 ${
-        active ? "ring-2 ring-accent ring-offset-2 ring-offset-bg-surface" : ""
-      }`}
-      style={{
-        background:
-          "linear-gradient(135deg, #0033A0 0%, #6366f1 50%, #FF8200 100%)",
-      }}
-    >
-      DK
-    </div>
-  );
-}
+const avatarSize = {
+  sm: "sm" as const,
+  md: "md" as const,
+  lg: "md" as const,
+};
 
 export function ProfileAvatar({
   active = false,
@@ -42,9 +26,27 @@ export function ProfileAvatar({
   showLabel = false,
   linked = true,
 }: ProfileAvatarProps) {
+  const ringClass = active
+    ? "ring-2 ring-accent ring-offset-2 ring-offset-bg-surface rounded-full"
+    : "";
+
+  const avatar = demoUser ? (
+    <UserAvatar
+      userId={demoUser.id}
+      displayName={demoUser.displayName}
+      src={demoUser.avatar}
+      size={avatarSize[size]}
+      className={ringClass}
+    />
+  ) : (
+    <div
+      className={`${size === "sm" ? "w-8 h-8" : "w-10 h-10"} rounded-full bg-bg-muted ${ringClass}`}
+    />
+  );
+
   const content = (
     <>
-      <AvatarCircle active={active} size={size} />
+      {avatar}
       {showLabel && (
         <span
           className={`text-[10px] font-medium ${active ? "text-accent" : "text-text-muted"}`}

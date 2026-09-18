@@ -26,9 +26,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const profileActive = pathname.startsWith(profileHref);
 
   return (
-    <div className="min-h-screen bg-bg-base flex">
+    <div className="min-h-screen flex">
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col w-56 border-r border-border bg-bg-surface fixed inset-y-0 left-0 z-40">
+      <aside className="hidden md:flex flex-col w-56 border-r border-white/[0.06] bg-bg-surface/75 backdrop-blur-xl fixed inset-y-0 left-0 z-40">
         <div className="p-6 border-b border-border">
           <Link href="/" className="block">
             <h1 className="text-xl font-bold text-text-primary">{APP_NAME}</h1>
@@ -75,7 +75,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Main content */}
       <div className="flex-1 md:ml-56 flex flex-col min-h-screen">
-        <header className="md:hidden sticky top-0 z-30 bg-bg-surface/95 backdrop-blur border-b border-border px-4 py-3">
+        <header className="md:hidden sticky top-0 z-30 bg-bg-base/80 backdrop-blur-xl border-b border-white/[0.06] px-4 py-3">
           <Link href="/">
             <h1 className="text-lg font-bold text-text-primary">{APP_NAME}</h1>
           </Link>
@@ -86,7 +86,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </main>
 
         {/* Mobile bottom nav — profile pinned to the right */}
-        <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-bg-surface/95 backdrop-blur border-t border-border safe-bottom">
+        <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-bg-base/85 backdrop-blur-xl border-t border-white/[0.06] safe-bottom">
           <div className="flex items-center h-16 max-w-lg mx-auto px-2">
             <div className="flex flex-1 justify-around">
               {mainNavItems.map(({ href, label, icon: Icon }) => (

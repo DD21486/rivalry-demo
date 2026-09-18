@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Flame } from "lucide-react";
 import {
@@ -6,7 +8,9 @@ import {
   getUserById,
 } from "@/lib/mock";
 import { formatRelativeTime, getTeamColor } from "@/lib/utils";
+import { CommunityBasketballIcon } from "./CommunityBasketballIcon";
 import { DebateStatusBadge } from "./DebateStatusBadge";
+import { DebateTags } from "./DebateTags";
 import { PostActionBar } from "./PostActionBar";
 import type { Post } from "@/lib/types";
 
@@ -22,17 +26,33 @@ export function PostCard({ post }: PostCardProps) {
     ? getTeamColor(primaryCommunity.slug)
     : "#6366f1";
 
+  const postHref = `/post/${post.id}`;
+
   return (
-    <article className="py-4 border-b border-border last:border-b-0">
-      {/* Reddit-style meta line */}
-      <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs mb-2">
+    <article
+      className="conversation-card relative px-3 py-4 -mx-1 cursor-pointer"
+      style={{
+        backgroundImage: `linear-gradient(120deg, color-mix(in srgb, ${teamColor} 6%, transparent), transparent 55%)`,
+      }}
+    >
+      <Link
+        href={postHref}
+        className="absolute inset-0 z-10 rounded-2xl"
+        aria-label="View conversation"
+      />
+      <div className="relative z-0 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs mb-2">
         {primaryCommunity && (
           <>
             <Link
               href={`/c/${primaryCommunity.slug}`}
-              className="font-bold hover:underline"
+              className="relative z-20 inline-flex items-center gap-1 font-bold hover:underline"
               style={{ color: teamColor }}
             >
+              <CommunityBasketballIcon
+                slug={primaryCommunity.slug}
+                color={teamColor}
+                size="sm"
+              />
               {primaryCommunity.name}
             </Link>
             <span className="text-text-muted">•</span>
@@ -42,7 +62,7 @@ export function PostCard({ post }: PostCardProps) {
           <>
             <Link
               href={`/u/${author.username}`}
-              className="font-medium text-text-secondary hover:underline"
+              className="relative z-20 font-medium text-text-secondary hover:underline"
             >
               {author.displayName}
             </Link>
@@ -61,22 +81,25 @@ export function PostCard({ post }: PostCardProps) {
         )}
       </div>
 
-      <Link href={`/post/${post.id}`} className="block group">
-        <p className="text-text-primary leading-relaxed group-hover:text-text-primary/90">
-          {post.body}
-        </p>
-      </Link>
+      <p className="text-text-primary leading-relaxed relative z-0 pointer-events-none">
+        {post.body}
+      </p>
 
       {(debate || post.communityIds.length > 1) && (
-        <div className="flex flex-wrap items-center gap-2 mt-2">
-          {debate && <DebateStatusBadge status={debate.status} />}
+        <div className="flex flex-wrap items-center gap-2 mt-2 relative z-20 pointer-events-auto">
+          {debate && (
+            <>
+              <DebateStatusBadge status={debate.status} />
+              <DebateTags communityIds={debate.communityIds} />
+            </>
+          )}
           {post.communityIds.slice(1).map((id) => {
             const c = getCommunityById(id);
             return c ? (
               <Link
                 key={c.id}
                 href={`/c/${c.slug}`}
-                className="text-xs text-text-muted hover:text-accent hover:underline"
+                className="relative z-20 pointer-events-auto text-xs text-text-muted hover:text-accent hover:underline"
               >
                 {c.name}
               </Link>
@@ -85,7 +108,7 @@ export function PostCard({ post }: PostCardProps) {
         </div>
       )}
 
-      <div className="mt-2">
+      <div className="relative z-20 mt-2">
         <PostActionBar
           postId={post.id}
           replyCount={post.replyCount}

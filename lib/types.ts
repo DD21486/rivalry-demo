@@ -130,6 +130,8 @@ export interface Debate {
   spectatorCount: number;
   scheduledAt?: string;
   completedAt?: string;
+  /** When the live debate round ends (before voting). */
+  debateEndsAt?: string;
   votingEndsAt?: string;
 }
 
